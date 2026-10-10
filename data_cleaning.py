@@ -59,7 +59,13 @@ def fix_zip(zip_val: str):
 
 df['postal_code'] = df['postal_code'].apply(fix_zip).astype('Int64')
 
-##### Convertir 'x-y people' into average(x,y)
+##### In "number_..." cols: changing None-> 0
+num_cols = df.filter(regex='^number').columns
+df[num_cols] = df[num_cols]\
+    .fillna(0)\
+    .astype(int)
+
+##### Convert 'x-y people' into average(x,y)
 mapping = {
     '1-2 People': 1.5,
     '3-4 People': 3.5,
@@ -83,4 +89,4 @@ df['conversion_date'] = pd.to_datetime(
 df = df[df.columns[:-3]]
 
 ##### Saving data
-df.to_csv(f'{DATA_PATH}/food_clean.csv')
+df.to_csv(f'{DATA_PATH}/food_clean.csv', index=False)
