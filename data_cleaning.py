@@ -54,10 +54,10 @@ df['last_name'] = df['last_name'].apply(val_and_format)
 def fix_zip(zip_val: str):
     try: 
         zip = int(float(zip_val))
-        return zip if 9999 < zip < 99999 else None
-    except: return None
+        return zip if 9999 < zip < 99999 else 0
+    except: return 0
 
-df['postal_code'] = df['postal_code'].apply(fix_zip).astype('Int64')
+df['postal_code'] = df['postal_code'].apply(fix_zip).astype(int)
 
 ##### In "number_..." cols: changing None-> 0
 num_cols = df.filter(regex='^number').columns
