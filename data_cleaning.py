@@ -47,8 +47,12 @@ def val_and_format(name:str):
         return one_only.capitalize()
     else: return None
 
-df['first_name'] = df['first_name'].apply(val_and_format)
-df['last_name'] = df['last_name'].apply(val_and_format)
+df['first_name'] = df['first_name']\
+    .apply(val_and_format)\
+    .fillna('Unknown')
+df['last_name'] = df['last_name']\
+    .apply(val_and_format)\
+    .fillna('Unknown')
 
 ##### Zip-code, ensuring all are int and 5 digits long
 def fix_zip(zip_val: str):
